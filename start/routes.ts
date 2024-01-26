@@ -29,5 +29,5 @@ Route.group(() => {
   Route.resource('/users', 'UsersController').apiOnly()
   Route.resource('/property', 'PropertiesController').apiOnly()
 })
-  .middleware('auth')
+  .middleware(['auth'])
   .prefix('api')

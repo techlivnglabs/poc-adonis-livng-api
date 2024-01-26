@@ -1,16 +1,16 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import Property from 'App/Models/Property'
+import User from 'App/Models/User'
 
-export default class PropertiesController {
+export default class UsersController {
   public async index({}: HttpContextContract) {
-    const properties = await Property.query()
-    return properties
+    const users = await User.query()
+    return users
   }
 
   public async store({ request }: HttpContextContract) {
-    const data = request.all()
-    const savedProperty = await Property.create(data)
-    return savedProperty.id
+    const body = request.all()
+    const saved = await User.create(body)
+    return saved.id
   }
 
   public async show({}: HttpContextContract) {}

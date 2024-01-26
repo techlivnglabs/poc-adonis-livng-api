@@ -19,41 +19,10 @@
 */
 
 import Route from '@ioc:Adonis/Core/Route'
-import User from 'App/Models/User'
 
 Route.group(() => {
-  Route.post('/login', async ({ auth, request, response }) => {
-    const email = request.input('email')
-    const password = request.input('password')
-
-    try {
-      const token = await auth.use('api').attempt(email, password)
-      return token
-    } catch {
-      return response.unauthorized('Invalid credentials')
-    }
-  })
-
-  Route.post('/register', async ({ auth, request, response }) => {
-    const email = request.input('email')
-    const password = request.input('password')
-
-    const alreadyHasUser = await User.findBy('email', email)
-
-    console.log(alreadyHasUser)
-    if (alreadyHasUser) {
-      const token = await auth.use('api').attempt(email, password)
-      return token
-    }
-
-    try {
-      const created = await User.create({ email, password })
-      const token = await auth.use('api').attempt(created.email, created.password)
-      return token
-    } catch {
-      return response.unauthorized('Invalid credentials')
-    }
-  })
+  Route.post('/login', 'AuthController.login')
+  Route.post('/register', 'AuthController.register')
 }).prefix('api/auth')
 
 Route.group(() => {
